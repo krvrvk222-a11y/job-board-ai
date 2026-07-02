@@ -725,3 +725,28 @@ body.dark-mode footer{
     color:#64748b;
 
 }
+
+/* ===========================
+   Job Actions
+=========================== */
+
+.job-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+.bookmark-btn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#f1f5f9;
+    font-size:20px;
+    transition:.3s;
+}
+
+.bookmark-btn:hover{
+    background:#2563eb;
+    color:white;
+}
