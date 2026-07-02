@@ -1132,3 +1132,100 @@ body.dark-mode footer{
     margin-top:40px;
 
 }
+/* ===========================
+   About Page
+=========================== */
+
+#about-page{
+
+    padding:80px 0;
+
+}
+
+#about-page h1{
+
+    margin-bottom:20px;
+
+}
+
+.about-grid{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+    margin-top:40px;
+
+}
+
+.about-card{
+
+    background:#ffffff;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.about-card h2{
+
+    margin-bottom:15px;
+
+}
+
+.about-card ul{
+
+    padding-left:20px;
+    list-style:disc;
+
+}
+
+.about-card li{
+
+    margin-bottom:10px;
+
+}
+
+/* ===========================
+   Scroll To Top
+=========================== */
+
+#scroll-top-btn{
+
+    position:fixed;
+    right:30px;
+    bottom:30px;
+
+    width:55px;
+    height:55px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#2563eb;
+    color:#ffffff;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:2000;
+
+}
+
+#scroll-top-btn:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.show-scroll-btn{
+
+    opacity:1 !important;
+    visibility:visible !important;
+
+}

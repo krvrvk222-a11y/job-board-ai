@@ -1,5 +1,6 @@
 const toast = document.getElementById("toast");
 const themeToggle = document.getElementById("theme-toggle");
+const scrollTopBtn = document.getElementById("scroll-top-btn");
 
 /* ===========================
    Toast Notification
@@ -13,7 +14,7 @@ function showToast(message){
 
     toast.classList.add("show");
 
-    setTimeout(() => {
+    setTimeout(()=>{
 
         toast.classList.remove("show");
 
@@ -29,11 +30,13 @@ function loadTheme(){
 
     const savedTheme = localStorage.getItem("theme");
 
-    if(savedTheme === "dark"){
+    if(savedTheme==="dark"){
 
         document.body.classList.add("dark-mode");
 
-        themeToggle.textContent = "☀️";
+        if(themeToggle){
+            themeToggle.textContent="☀️";
+        }
 
     }
 
@@ -47,7 +50,9 @@ function toggleTheme(){
 
         localStorage.setItem("theme","dark");
 
-        themeToggle.textContent = "☀️";
+        if(themeToggle){
+            themeToggle.textContent="☀️";
+        }
 
         showToast("🌙 Dark Mode Enabled");
 
@@ -55,7 +60,9 @@ function toggleTheme(){
 
         localStorage.setItem("theme","light");
 
-        themeToggle.textContent = "🌙";
+        if(themeToggle){
+            themeToggle.textContent="🌙";
+        }
 
         showToast("☀️ Light Mode Enabled");
 
@@ -70,3 +77,39 @@ if(themeToggle){
 }
 
 loadTheme();
+
+/* ===========================
+   Scroll To Top
+=========================== */
+
+window.addEventListener("scroll",()=>{
+
+    if(!scrollTopBtn) return;
+
+    if(window.scrollY>300){
+
+        scrollTopBtn.classList.add("show-scroll-btn");
+
+    }else{
+
+        scrollTopBtn.classList.remove("show-scroll-btn");
+
+    }
+
+});
+
+if(scrollTopBtn){
+
+    scrollTopBtn.addEventListener("click",()=>{
+
+        window.scrollTo({
+
+            top:0,
+
+            behavior:"smooth"
+
+        });
+
+    });
+
+}
