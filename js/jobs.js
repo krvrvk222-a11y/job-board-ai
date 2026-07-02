@@ -11,7 +11,11 @@ function createJobCard(job){
 
                 <div>
 
-                    <h3>${job.title}</h3>
+                <h3>
+                    <a href="job-details.html?id=${job.id}">
+                    ${job.title}
+                    </a>
+                </h3>
 
                     <p class="company-name">${job.company}</p>
 
@@ -49,8 +53,9 @@ function createJobCard(job){
 
             <div class="job-footer">
 
-                <button class="apply-btn">
-                    Apply Now
+                <button class="apply-btn"
+                    onclick="window.location.href='job-details.html?id=${job.id}'">
+                    View Details
                 </button>
 
                 <button
