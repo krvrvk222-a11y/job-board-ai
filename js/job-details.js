@@ -18,15 +18,17 @@ recentlyViewed = recentlyViewed.filter(id => id !== jobId);
 recentlyViewed.unshift(jobId);
 
 if(recentlyViewed.length > 5){
-
     recentlyViewed.pop();
-
 }
 
 localStorage.setItem(
     "recentlyViewed",
     JSON.stringify(recentlyViewed)
 );
+
+/* ===========================
+   Render Job Details
+=========================== */
 
 if(jobDetailCard){
 
@@ -56,7 +58,7 @@ if(jobDetailCard){
 
                 <div class="skills">
 
-                    ${job.skills.map(skill=>`
+                    ${job.skills.map(skill => `
                         <span class="skill-tag">${skill}</span>
                     `).join("")}
 
@@ -88,79 +90,110 @@ if(jobDetailCard){
 
                 <p><strong>Status:</strong> Actively Hiring</p>
 
-                <button id="apply-btn" class="btn-primary">
+                <div class="job-detail-actions">
 
-                    Apply Now
+                    <button id="apply-btn" class="btn-primary">
+                        Apply Now
+                    </button>
 
-                </button>
+                    <button id="share-btn" class="btn-secondary">
+                        Share Job
+                    </button>
+
+                </div>
 
             </div>
 
         `;
-const modal = document.getElementById("apply-modal");
-const closeModal = document.querySelector(".close-modal");
-const applyForm = document.getElementById("apply-form");
 
-document
-.getElementById("apply-btn")
-.addEventListener("click",()=>{
+        /* ===========================
+           Apply Modal
+        =========================== */
 
-    modal.style.display="flex";
+        const modal = document.getElementById("apply-modal");
+        const closeModal = document.querySelector(".close-modal");
+        const applyForm = document.getElementById("apply-form");
 
-});
+        document
+        .getElementById("apply-btn")
+        .addEventListener("click", () => {
 
-closeModal.addEventListener("click",()=>{
+            modal.style.display = "flex";
 
-    modal.style.display="none";
+        });
 
-});
+        closeModal.addEventListener("click", () => {
 
-window.addEventListener("click",(e)=>{
+            modal.style.display = "none";
 
-    if(e.target===modal){
+        });
 
-        modal.style.display="none";
+        window.addEventListener("click", (e) => {
 
-    }
+            if(e.target === modal){
 
-});
+                modal.style.display = "none";
 
-applyForm.addEventListener("submit",(e)=>{
+            }
 
-    e.preventDefault();
+        });
 
-    const appliedJobs =
-        JSON.parse(localStorage.getItem("appliedJobs")) || [];
+        applyForm.addEventListener("submit", (e) => {
 
-    if(!appliedJobs.includes(job.id)){
+            e.preventDefault();
 
-        appliedJobs.push(job.id);
+            const appliedJobs =
+                JSON.parse(localStorage.getItem("appliedJobs")) || [];
 
-        localStorage.setItem(
-            "appliedJobs",
-            JSON.stringify(appliedJobs)
-        );
+            if(!appliedJobs.includes(job.id)){
 
-        showToast("✅ Application Submitted Successfully");
+                appliedJobs.push(job.id);
 
-    }else{
+                localStorage.setItem(
+                    "appliedJobs",
+                    JSON.stringify(appliedJobs)
+                );
 
-        showToast("⚠️ You already applied for this job");
+                showToast("✅ Application Submitted Successfully");
 
-    }
+            }else{
 
-    modal.style.display="none";
+                showToast("⚠️ You already applied for this job");
 
-    applyForm.reset();
+            }
 
-});
+            modal.style.display = "none";
+
+            applyForm.reset();
+
+        });
+
+        /* ===========================
+           Share Job
+        =========================== */
+
+        document
+        .getElementById("share-btn")
+        .addEventListener("click", async () => {
+
+            try{
+
+                await navigator.clipboard.writeText(window.location.href);
+
+                showToast("🔗 Job link copied successfully");
+
+            }catch(error){
+
+                showToast("❌ Unable to copy link");
+
+            }
+
+        });
 
     }else{
 
         jobDetailCard.innerHTML = `
-
             <h2>Job not found.</h2>
-
         `;
 
     }
