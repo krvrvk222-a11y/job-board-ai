@@ -94,6 +94,9 @@ function searchJobs(){
     });
 
     displayJobs(filtered);
+    document.getElementById("latest-jobs").scrollIntoView({
+    behavior: "smooth"
+    });
 
 }
 
@@ -344,11 +347,11 @@ if(searchButton){
 
 }
 
-if(searchInput){
+// if(searchInput){
 
-    searchInput.addEventListener("keyup",searchJobs);
+//     searchInput.addEventListener("keyup",searchJobs);
 
-}
+// }
 
 if(locationFilter){
 
