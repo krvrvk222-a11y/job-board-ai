@@ -706,3 +706,22 @@ body.dark-mode footer{
     background:#020617;
 }
 
+/* ===========================
+   Empty Search State
+=========================== */
+
+.no-results{
+
+    background:white;
+    padding:50px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+.no-results h2{
+
+    color:#64748b;
+
+}
