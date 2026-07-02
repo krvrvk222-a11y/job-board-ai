@@ -62,13 +62,24 @@ function renderLatestJobs(){
         .join("");
 }
 
+const jobsPerPage = 6;
+let currentPage = 1;
+
 function renderAllJobs(jobArray = jobs){
 
     if(!allJobsContainer) return;
 
-    allJobsContainer.innerHTML = jobArray
+    const start = (currentPage - 1) * jobsPerPage;
+    const end = start + jobsPerPage;
+
+    const paginatedJobs = jobArray.slice(start, end);
+
+    allJobsContainer.innerHTML = paginatedJobs
         .map(createJobCard)
         .join("");
+
+    renderPagination(jobArray);
+
 }
 
 renderFeaturedJobs();
