@@ -1,0 +1,63 @@
+/* ===========================
+   Tablet
+=========================== */
+
+@media(max-width:992px){
+
+    nav{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    #hero{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+    }
+
+    .search-form{
+        flex-direction:column;
+    }
+
+    .search-form input,
+    .search-form select,
+    .search-form button{
+        width:100%;
+    }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media(max-width:768px){
+
+    .hero-content h1{
+        font-size:38px;
+    }
+
+    section{
+        padding:60px 20px;
+    }
+
+    nav ul{
+        flex-direction:column;
+        gap:18px;
+    }
+
+    .footer-links{
+        flex-direction:column;
+    }
+
+    .company-grid,
+    .category-grid,
+    #featured-job-list,
+    #latest-job-list{
+        grid-template-columns:1fr;
+    }
+
+}
