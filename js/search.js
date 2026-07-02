@@ -23,11 +23,11 @@ function displayJobs(jobList){
 
     if(!latestJobList) return;
 
-    latestJobList.innerHTML="";
+    latestJobList.innerHTML = "";
 
-    if(jobList.length===0){
+    if(jobList.length === 0){
 
-        latestJobList.innerHTML=`
+        latestJobList.innerHTML = `
             <div class="no-results">
                 <h2>No matching jobs found</h2>
             </div>
@@ -37,7 +37,7 @@ function displayJobs(jobList){
 
     }
 
-    latestJobList.innerHTML=jobList
+    latestJobList.innerHTML = jobList
         .map(createJobCard)
         .join("");
 
@@ -47,28 +47,49 @@ function searchJobs(){
 
     if(!searchInput) return;
 
-    const keyword=searchInput.value.toLowerCase().trim();
-    const location=locationFilter.value.toLowerCase();
-    const jobType=jobTypeFilter.value.toLowerCase();
+    const keyword = searchInput.value
+        .trim()
+        .toLowerCase();
 
-    const filtered=jobs.filter(job=>{
+    const location = locationFilter
+        ? locationFilter.value.toLowerCase()
+        : "";
 
-        const matchesKeyword=
+    const jobType = jobTypeFilter
+        ? jobTypeFilter.value.toLowerCase()
+        : "";
+
+    const filtered = jobs.filter(job=>{
+
+        const matchesKeyword =
+
             job.title.toLowerCase().includes(keyword) ||
+
             job.company.toLowerCase().includes(keyword) ||
+
             job.skills.join(" ").toLowerCase().includes(keyword);
 
-        const matchesLocation=
-            location==="" ||
-            job.location.toLowerCase()===location;
+        const matchesLocation =
 
-        const matchesJobType=
-            jobType==="" ||
-            job.type.toLowerCase()===jobType;
+            location === "" ||
 
-        return matchesKeyword &&
-               matchesLocation &&
-               matchesJobType;
+            job.location.toLowerCase() === location;
+
+        const matchesJobType =
+
+            jobType === "" ||
+
+            job.type.toLowerCase() === jobType;
+
+        return (
+
+            matchesKeyword &&
+
+            matchesLocation &&
+
+            matchesJobType
+
+        );
 
     });
 
@@ -84,66 +105,97 @@ function filterJobs(){
 
     if(!jobsSearch) return;
 
-    const keyword=jobsSearch.value.toLowerCase().trim();
+    const keyword = jobsSearch.value
+        .trim()
+        .toLowerCase();
 
-    filteredJobs=jobs.filter(job=>{
+    filteredJobs = jobs.filter(job=>{
 
-        const matchesKeyword=
+        const matchesKeyword =
+
             job.title.toLowerCase().includes(keyword) ||
+
             job.company.toLowerCase().includes(keyword) ||
+
             job.skills.join(" ").toLowerCase().includes(keyword);
 
-        const matchesLocation=
+        const matchesLocation =
+
             !filterLocation ||
-            filterLocation.value==="" ||
-            job.location===filterLocation.value;
 
-        const matchesType=
+            filterLocation.value === "" ||
+
+            job.location === filterLocation.value;
+
+        const matchesType =
+
             !filterJobType ||
-            filterJobType.value==="" ||
-            job.type===filterJobType.value;
 
-        const matchesExperience=
+            filterJobType.value === "" ||
+
+            job.type === filterJobType.value;
+
+        const matchesExperience =
+
             !filterExperience ||
-            filterExperience.value==="" ||
-            job.experience===filterExperience.value;
 
-        let matchesSalary=true;
+            filterExperience.value === "" ||
+
+            job.experience === filterExperience.value;
+
+        let matchesSalary = true;
 
         if(filterSalary){
 
-            const salary=parseInt(job.salary);
+            const salary = Number(job.salary);
 
-            if(filterSalary.value==="Below ₹10 LPA"){
-                matchesSalary=salary<10;
-            }
+            switch(filterSalary.value){
 
-            if(filterSalary.value==="₹10-15 LPA"){
-                matchesSalary=salary>=10 && salary<=15;
-            }
+                case "Below ₹10 LPA":
 
-            if(filterSalary.value==="Above ₹15 LPA"){
-                matchesSalary=salary>15;
+                    matchesSalary = salary < 10;
+
+                    break;
+
+                case "₹10-15 LPA":
+
+                    matchesSalary = salary >= 10 && salary <= 15;
+
+                    break;
+
+                case "Above ₹15 LPA":
+
+                    matchesSalary = salary > 15;
+
+                    break;
+
             }
 
         }
 
-        return matchesKeyword &&
-               matchesLocation &&
-               matchesType &&
-               matchesExperience &&
-               matchesSalary;
+        return (
+
+            matchesKeyword &&
+
+            matchesLocation &&
+
+            matchesType &&
+
+            matchesExperience &&
+
+            matchesSalary
+
+        );
 
     });
 
-    currentPage=1;
+    currentPage = 1;
 
     renderAllJobs(filteredJobs);
 
     showSuggestions(keyword);
 
 }
-
 /* ===========================
    Search Suggestions
 =========================== */
@@ -152,36 +204,55 @@ function showSuggestions(keyword){
 
     if(!suggestionBox) return;
 
-    if(keyword===""){
+    if(keyword === ""){
 
-        suggestionBox.innerHTML="";
+        suggestionBox.innerHTML = "";
+
         return;
 
     }
 
-    const suggestions=jobs
-        .filter(job=>
-            job.title.toLowerCase().includes(keyword)
+    const suggestions = jobs
+
+        .filter(job =>
+
+            job.title.toLowerCase().includes(keyword) ||
+
+            job.company.toLowerCase().includes(keyword)
+
         )
+
         .slice(0,5);
 
-    suggestionBox.innerHTML=suggestions
-        .map(job=>`
+    suggestionBox.innerHTML = suggestions
+
+        .map(job => `
+
             <div class="suggestion-item">
+
                 ${job.title}
+
             </div>
+
         `)
+
         .join("");
 
     document
+
         .querySelectorAll(".suggestion-item")
+
         .forEach(item=>{
 
             item.addEventListener("click",()=>{
 
-                jobsSearch.value=item.innerText;
+                if(jobsSearch){
 
-                suggestionBox.innerHTML="";
+                    jobsSearch.value = item.textContent.trim();
+
+                }
+
+                suggestionBox.innerHTML = "";
 
                 filterJobs();
 
@@ -199,45 +270,65 @@ function sortJobList(){
 
     if(!sortJobs) return;
 
+    const sortedJobs = [...filteredJobs];
+
     switch(sortJobs.value){
 
         case "company":
 
-            filteredJobs.sort((a,b)=>
-                a.company.localeCompare(b.company));
+            sortedJobs.sort((a,b)=>
+
+                a.company.localeCompare(b.company)
+
+            );
 
             break;
 
         case "salary-high":
 
-            filteredJobs.sort((a,b)=>
-                parseInt(b.salary)-parseInt(a.salary));
+            sortedJobs.sort((a,b)=>
+
+                Number(b.salary)-Number(a.salary)
+
+            );
 
             break;
 
         case "salary-low":
 
-            filteredJobs.sort((a,b)=>
-                parseInt(a.salary)-parseInt(b.salary));
+            sortedJobs.sort((a,b)=>
+
+                Number(a.salary)-Number(b.salary)
+
+            );
 
             break;
 
         case "experience":
 
-            filteredJobs.sort((a,b)=>
-                parseInt(a.experience)-parseInt(b.experience));
+            sortedJobs.sort((a,b)=>
+
+                parseInt(a.experience)-parseInt(b.experience)
+
+            );
 
             break;
 
         case "newest":
 
-            filteredJobs.sort((a,b)=>b.id-a.id);
+            sortedJobs.sort((a,b)=>
+
+                b.id-a.id
+
+            );
 
             break;
 
     }
 
-    currentPage=1;
+    filteredJobs = sortedJobs;
+
+    currentPage = 1;
 
     renderAllJobs(filteredJobs);
 
@@ -248,41 +339,95 @@ function sortJobList(){
 =========================== */
 
 if(searchButton){
+
     searchButton.addEventListener("click",searchJobs);
+
 }
 
 if(searchInput){
+
     searchInput.addEventListener("keyup",searchJobs);
+
 }
 
 if(locationFilter){
+
     locationFilter.addEventListener("change",searchJobs);
+
 }
 
 if(jobTypeFilter){
+
     jobTypeFilter.addEventListener("change",searchJobs);
+
 }
 
 if(jobsSearch){
+
     jobsSearch.addEventListener("keyup",filterJobs);
+
 }
 
 if(filterLocation){
+
     filterLocation.addEventListener("change",filterJobs);
+
 }
 
 if(filterJobType){
+
     filterJobType.addEventListener("change",filterJobs);
+
 }
 
 if(filterExperience){
+
     filterExperience.addEventListener("change",filterJobs);
+
 }
 
 if(filterSalary){
+
     filterSalary.addEventListener("change",filterJobs);
+
 }
 
 if(sortJobs){
+
     sortJobs.addEventListener("change",sortJobList);
+
 }
+
+/* ===========================
+   Close Suggestions
+=========================== */
+
+document.addEventListener("click",(event)=>{
+
+    if(
+
+        suggestionBox &&
+
+        jobsSearch &&
+
+        !jobsSearch.contains(event.target) &&
+
+        !suggestionBox.contains(event.target)
+
+    ){
+
+        suggestionBox.innerHTML = "";
+
+    }
+
+});
+
+document.addEventListener("keydown",(event)=>{
+
+    if(event.key === "Escape" && suggestionBox){
+
+        suggestionBox.innerHTML = "";
+
+    }
+
+});

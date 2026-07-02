@@ -7,7 +7,7 @@ const jobId = Number(params.get("id"));
 const job = jobs.find(item => item.id === jobId);
 
 /* ===========================
-   Recently Viewed Jobs
+   Recently Viewed
 =========================== */
 
 let recentlyViewed =
@@ -18,7 +18,9 @@ recentlyViewed = recentlyViewed.filter(id => id !== jobId);
 recentlyViewed.unshift(jobId);
 
 if(recentlyViewed.length > 5){
+
     recentlyViewed.pop();
+
 }
 
 localStorage.setItem(
@@ -42,25 +44,45 @@ if(jobDetailCard){
 
                 <h3>${job.company}</h3>
 
-                <p>⭐ Rating: ${job.rating || "4.5"}</p>
+                <p>⭐ ${job.rating}</p>
 
                 <hr>
 
-                <p><strong>📍 Location:</strong> ${job.location}</p>
+                <p>
+                    <strong>📍 Location:</strong>
+                    ${job.location}
+                </p>
 
-                <p><strong>💰 Salary:</strong> ${job.salary}</p>
+                <p>
+                    <strong>💰 Salary:</strong>
+                    ₹${job.salary} LPA
+                </p>
 
-                <p><strong>💼 Job Type:</strong> ${job.type}</p>
+                <p>
+                    <strong>💼 Job Type:</strong>
+                    ${job.type}
+                </p>
 
-                <p><strong>🎓 Experience:</strong> ${job.experience}</p>
+                <p>
+                    <strong>🎓 Experience:</strong>
+                    ${job.experience}
+                </p>
 
                 <h2>Skills</h2>
 
                 <div class="skills">
 
-                    ${job.skills.map(skill => `
-                        <span class="skill-tag">${skill}</span>
-                    `).join("")}
+                    ${job.skills
+                        .map(skill=>`
+
+                            <span class="skill-tag">
+
+                                ${skill}
+
+                            </span>
+
+                        `)
+                        .join("")}
 
                 </div>
 
@@ -68,36 +90,102 @@ if(jobDetailCard){
 
                 <p>
 
-                    We are looking for a passionate
-                    <strong>${job.title}</strong>
-                    to join the
-                    <strong>${job.company}</strong>
-                    team.
-
-                    You will collaborate with talented engineers,
-                    build high-quality software,
-                    and contribute to exciting real-world projects.
+                    ${job.description}
 
                 </p>
 
+                <h2>Responsibilities</h2>
+
+                <ul>
+
+                    ${job.responsibilities
+                        .map(item=>`
+
+                            <li>${item}</li>
+
+                        `)
+                        .join("")}
+
+                </ul>
+
+                <h2>Requirements</h2>
+
+                <ul>
+
+                    ${job.requirements
+                        .map(item=>`
+
+                            <li>${item}</li>
+
+                        `)
+                        .join("")}
+
+                </ul>
+
                 <h2>Company Details</h2>
 
-                <p><strong>Industry:</strong> Technology</p>
+                <p>
 
-                <p><strong>Employees:</strong> 10000+</p>
+                    <strong>Industry:</strong>
 
-                <p><strong>Applicants:</strong> 120</p>
+                    ${job.industry}
 
-                <p><strong>Status:</strong> Actively Hiring</p>
+                </p>
+
+                <p>
+
+                    <strong>Employees:</strong>
+
+                    ${job.employees}
+
+                </p>
+
+                <p>
+
+                    <strong>Applicants:</strong>
+
+                    ${job.applicants}
+
+                </p>
+
+                <p>
+
+                    <strong>Status:</strong>
+
+                    ${job.status}
+
+                </p>
+
+                <p>
+
+                    <strong>Website:</strong>
+
+                    <a
+                        href="${job.website}"
+                        target="_blank">
+
+                        Visit Company
+
+                    </a>
+
+                </p>
 
                 <div class="job-detail-actions">
 
-                    <button id="apply-btn" class="btn-primary">
+                    <button
+                        id="apply-btn"
+                        class="btn-primary">
+
                         Apply Now
+
                     </button>
 
-                    <button id="share-btn" class="btn-secondary">
+                    <button
+                        id="share-btn"
+                        class="btn-secondary">
+
                         Share Job
+
                     </button>
 
                 </div>
@@ -105,8 +193,7 @@ if(jobDetailCard){
             </div>
 
         `;
-
-        /* ===========================
+                /* ===========================
            Apply Modal
         =========================== */
 
@@ -114,94 +201,153 @@ if(jobDetailCard){
         const closeModal = document.querySelector(".close-modal");
         const applyForm = document.getElementById("apply-form");
 
-        document
-        .getElementById("apply-btn")
-        .addEventListener("click", () => {
+        if(modal && closeModal && applyForm){
 
-            modal.style.display = "flex";
+            document
+                .getElementById("apply-btn")
+                .addEventListener("click",()=>{
 
-        });
+                    modal.style.display = "flex";
 
-        closeModal.addEventListener("click", () => {
+                });
 
-            modal.style.display = "none";
-
-        });
-
-        window.addEventListener("click", (e) => {
-
-            if(e.target === modal){
+            closeModal.addEventListener("click",()=>{
 
                 modal.style.display = "none";
 
-            }
+            });
 
-        });
+            window.addEventListener("click",(event)=>{
 
-        applyForm.addEventListener("submit", (e) => {
+                if(event.target === modal){
 
-            e.preventDefault();
+                    modal.style.display = "none";
 
-            const appliedJobs =
-                JSON.parse(localStorage.getItem("appliedJobs")) || [];
+                }
 
-            if(!appliedJobs.includes(job.id)){
+            });
 
-                appliedJobs.push(job.id);
+            applyForm.addEventListener("submit",(event)=>{
 
-                localStorage.setItem(
-                    "appliedJobs",
-                    JSON.stringify(appliedJobs)
-                );
+                event.preventDefault();
 
-                showToast("✅ Application Submitted Successfully");
+                let appliedJobs =
 
-            }else{
+                    JSON.parse(
+                        localStorage.getItem("appliedJobs")
+                    ) || [];
 
-                showToast("⚠️ You already applied for this job");
+                if(!appliedJobs.includes(job.id)){
 
-            }
+                    appliedJobs.push(job.id);
 
-            modal.style.display = "none";
+                    localStorage.setItem(
 
-            applyForm.reset();
+                        "appliedJobs",
 
-        });
+                        JSON.stringify(appliedJobs)
+
+                    );
+
+                    showToast(
+                        "✅ Application Submitted Successfully"
+                    );
+
+                }else{
+
+                    showToast(
+                        "⚠️ You already applied for this job"
+                    );
+
+                }
+
+                applyForm.reset();
+
+                modal.style.display = "none";
+
+            });
+
+        }
 
         /* ===========================
            Share Job
         =========================== */
 
-        document
-        .getElementById("share-btn")
-        .addEventListener("click", async () => {
+        const shareButton = document.getElementById("share-btn");
 
-            try{
+        if(shareButton){
 
-                await navigator.clipboard.writeText(window.location.href);
+            shareButton.addEventListener("click",()=>{
 
-                showToast("🔗 Job link copied successfully");
+                const url = window.location.href;
 
-            }catch(error){
+                if(
 
-                showToast("❌ Unable to copy link");
+                    navigator.clipboard &&
 
-            }
+                    window.isSecureContext
 
-        });
+                ){
+
+                    navigator.clipboard
+                        .writeText(url)
+                        .then(()=>{
+
+                            showToast(
+                                "🔗 Job link copied successfully"
+                            );
+
+                        })
+                        .catch(()=>{
+
+                            fallbackCopy(url);
+
+                        });
+
+                }else{
+
+                    fallbackCopy(url);
+
+                }
+
+            });
+
+        }
+
+        function fallbackCopy(text){
+
+            const textArea =
+                document.createElement("textarea");
+
+            textArea.value = text;
+
+            document.body.appendChild(textArea);
+
+            textArea.select();
+
+            document.execCommand("copy");
+
+            document.body.removeChild(textArea);
+
+            showToast(
+                "🔗 Job link copied successfully"
+            );
+
+        }
 
     }else{
 
         jobDetailCard.innerHTML = `
+
             <h2>Job not found.</h2>
+
         `;
 
     }
 
 }
-
 /* ===========================
-   Display Recently Viewed
+   Recently Viewed Jobs
 =========================== */
 
 const recentlyViewedList =
@@ -212,13 +358,35 @@ function loadRecentlyViewed(){
     if(!recentlyViewedList) return;
 
     const viewedJobs = recentlyViewed
+
         .map(id => jobs.find(job => job.id === id))
+
         .filter(job => job && job.id !== jobId);
 
     if(viewedJobs.length === 0){
 
         recentlyViewedList.innerHTML = `
-            <p>No recently viewed jobs.</p>
+
+            <div class="no-results">
+
+                <h2>No Recently Viewed Jobs</h2>
+
+                <p>Start exploring jobs to build your history.</p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    if(typeof createJobCard !== "function"){
+
+        recentlyViewedList.innerHTML = `
+
+            <p>Unable to load recently viewed jobs.</p>
+
         `;
 
         return;
@@ -226,8 +394,11 @@ function loadRecentlyViewed(){
     }
 
     recentlyViewedList.innerHTML =
+
         viewedJobs
+
             .map(createJobCard)
+
             .join("");
 
 }

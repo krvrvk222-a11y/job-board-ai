@@ -33,7 +33,13 @@ function toggleBookmark(id){
 
     saveBookmarks(bookmarks);
 
-    loadBookmarks();
+    if(typeof loadBookmarks === "function"){
+        loadBookmarks();
+    }
+
+    if(typeof renderAllJobs === "function"){
+        renderAllJobs(filteredJobs || jobs);
+    }
 
 }
 
@@ -45,7 +51,11 @@ function loadBookmarks(){
 
     const saved = getBookmarks();
 
-    const savedJobs = jobs.filter(job => saved.includes(job.id));
+    const savedJobs = jobs.filter(job =>
+
+        saved.includes(job.id)
+
+    );
 
     if(savedJobs.length === 0){
 
@@ -55,7 +65,7 @@ function loadBookmarks(){
 
                 <h2>No Bookmarked Jobs</h2>
 
-                <p>Save jobs by clicking ❤️.</p>
+                <p>Save jobs by clicking ❤️ on any job card.</p>
 
             </div>
 
@@ -65,8 +75,22 @@ function loadBookmarks(){
 
     }
 
+    if(typeof createJobCard !== "function"){
+
+        bookmarkList.innerHTML = `
+
+            <p>Unable to load bookmarked jobs.</p>
+
+        `;
+
+        return;
+
+    }
+
     bookmarkList.innerHTML = savedJobs
+
         .map(createJobCard)
+
         .join("");
 
 }

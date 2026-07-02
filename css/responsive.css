@@ -4,10 +4,17 @@
 
 @media (max-width:992px){
 
+    .container{
+
+        width:92%;
+
+    }
+
     nav{
 
         flex-direction:column;
         gap:20px;
+        align-items:center;
 
     }
 
@@ -15,6 +22,7 @@
 
         flex-wrap:wrap;
         justify-content:center;
+        gap:20px;
 
     }
 
@@ -22,12 +30,14 @@
 
         grid-template-columns:1fr;
         text-align:center;
+        gap:40px;
 
     }
 
     .jobs-layout{
 
         grid-template-columns:1fr;
+        gap:30px;
 
     }
 
@@ -51,6 +61,18 @@
 
 @media (max-width:768px){
 
+    html{
+
+        overflow-x:hidden;
+
+    }
+
+    body{
+
+        overflow-x:hidden;
+
+    }
+
     section{
 
         padding:60px 0;
@@ -72,6 +94,14 @@
     .hero-buttons{
 
         flex-direction:column;
+        gap:15px;
+
+    }
+
+    .hero-buttons a,
+    .hero-buttons button{
+
+        width:100%;
 
     }
 
@@ -112,15 +142,29 @@
 
     }
 
+    .job-footer button{
+
+        width:100%;
+
+    }
+
     .job-detail-actions{
 
         flex-direction:column;
+        gap:15px;
+
+    }
+
+    .job-detail-actions button{
+
+        width:100%;
 
     }
 
     .modal-content{
 
         width:95%;
+        padding:25px;
 
     }
 
@@ -160,6 +204,12 @@
     .post-job-btn{
 
         width:100%;
+
+    }
+
+    .filter-sidebar{
+
+        padding:20px;
 
     }
 

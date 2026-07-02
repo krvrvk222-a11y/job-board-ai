@@ -2,6 +2,8 @@ const toast = document.getElementById("toast");
 const themeToggle = document.getElementById("theme-toggle");
 const scrollTopBtn = document.getElementById("scroll-top-btn");
 
+let toastTimeout;
+
 /* ===========================
    Toast Notification
 =========================== */
@@ -10,11 +12,13 @@ function showToast(message){
 
     if(!toast) return;
 
+    clearTimeout(toastTimeout);
+
     toast.textContent = message;
 
     toast.classList.add("show");
 
-    setTimeout(()=>{
+    toastTimeout = setTimeout(()=>{
 
         toast.classList.remove("show");
 
@@ -30,12 +34,12 @@ function loadTheme(){
 
     const savedTheme = localStorage.getItem("theme");
 
-    if(savedTheme==="dark"){
+    if(savedTheme === "dark"){
 
         document.body.classList.add("dark-mode");
 
         if(themeToggle){
-            themeToggle.textContent="☀️";
+            themeToggle.textContent = "☀️";
         }
 
     }
@@ -46,33 +50,25 @@ function toggleTheme(){
 
     document.body.classList.toggle("dark-mode");
 
-    if(document.body.classList.contains("dark-mode")){
+    const isDark = document.body.classList.contains("dark-mode");
 
-        localStorage.setItem("theme","dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
 
-        if(themeToggle){
-            themeToggle.textContent="☀️";
-        }
-
-        showToast("🌙 Dark Mode Enabled");
-
-    }else{
-
-        localStorage.setItem("theme","light");
-
-        if(themeToggle){
-            themeToggle.textContent="🌙";
-        }
-
-        showToast("☀️ Light Mode Enabled");
-
+    if(themeToggle){
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
     }
+
+    showToast(
+        isDark
+            ? "🌙 Dark Mode Enabled"
+            : "☀️ Light Mode Enabled"
+    );
 
 }
 
 if(themeToggle){
 
-    themeToggle.addEventListener("click",toggleTheme);
+    themeToggle.addEventListener("click", toggleTheme);
 
 }
 
@@ -86,7 +82,7 @@ window.addEventListener("scroll",()=>{
 
     if(!scrollTopBtn) return;
 
-    if(window.scrollY>300){
+    if(window.scrollY > 300){
 
         scrollTopBtn.classList.add("show-scroll-btn");
 

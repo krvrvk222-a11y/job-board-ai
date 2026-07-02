@@ -1,23 +1,28 @@
 const featuredJobList = document.getElementById("featured-job-list");
 const latestJobList = document.getElementById("latest-job-list");
 const allJobsContainer = document.getElementById("all-jobs");
+const pagination = document.getElementById("pagination");
 
 const jobsPerPage = 6;
 let currentPage = 1;
+
+let featuredTimeout;
+let latestTimeout;
+let jobsTimeout;
 
 /* ===========================
    Skeleton Loader
 =========================== */
 
-function showSkeleton(container,count){
+function showSkeleton(container, count){
 
     if(!container) return;
 
-    let skeleton="";
+    let skeleton = "";
 
-    for(let i=0;i<count;i++){
+    for(let i = 0; i < count; i++){
 
-        skeleton+=`
+        skeleton += `
             <div class="skeleton-card">
                 <div class="skeleton skeleton-title"></div>
                 <div class="skeleton skeleton-text"></div>
@@ -29,7 +34,7 @@ function showSkeleton(container,count){
 
     }
 
-    container.innerHTML=skeleton;
+    container.innerHTML = skeleton;
 
 }
 
@@ -40,6 +45,7 @@ function showSkeleton(container,count){
 function createJobCard(job){
 
     return `
+
         <div class="job-card">
 
             <div class="job-header">
@@ -47,21 +53,33 @@ function createJobCard(job){
                 <div>
 
                     <h3>
+
                         <a href="job-details.html?id=${job.id}">
+
                             ${job.title}
+
                         </a>
+
                     </h3>
 
-                    <p class="company-name">${job.company}</p>
+                    <p class="company-name">
+
+                        ${job.company}
+
+                    </p>
 
                 </div>
 
                 <div class="job-badges">
 
-                    ${job.featured ? `<span class="badge featured">🔥 Featured</span>` : ""}
+                    ${job.featured
+                        ? `<span class="badge featured">🔥 Featured</span>`
+                        : ""}
 
                     <span class="badge rating">
-                        ⭐ ${job.rating || "4.5"}
+
+                        ⭐ ${job.rating ?? "4.5"}
+
                     </span>
 
                 </div>
@@ -71,17 +89,22 @@ function createJobCard(job){
             <div class="job-info">
 
                 <p>📍 ${job.location}</p>
-                <p>💰 ${job.salary}</p>
+
+                <p>💰 ₹${job.salary} LPA</p>
+
                 <p>💼 ${job.type}</p>
+
                 <p>🎓 ${job.experience}</p>
 
             </div>
 
             <div class="skills">
 
-                ${job.skills.map(skill=>`
-                    <span class="skill-tag">${skill}</span>
-                `).join("")}
+                ${job.skills
+                    .map(skill => `
+                        <span class="skill-tag">${skill}</span>
+                    `)
+                    .join("")}
 
             </div>
 
@@ -106,6 +129,7 @@ function createJobCard(job){
             </div>
 
         </div>
+
     `;
 
 }
@@ -118,14 +142,20 @@ function renderFeaturedJobs(){
 
     if(!featuredJobList) return;
 
+    clearTimeout(featuredTimeout);
+
     showSkeleton(featuredJobList,3);
 
-    setTimeout(()=>{
+    featuredTimeout = setTimeout(()=>{
 
-        const featured=jobs.filter(job=>job.featured);
+        const featured = jobs
+            .filter(job => job.featured)
+            .slice(0,3);
 
-        featuredJobList.innerHTML=
-            featured.map(createJobCard).join("");
+        featuredJobList.innerHTML =
+            featured
+                .map(createJobCard)
+                .join("");
 
     },700);
 
@@ -139,14 +169,17 @@ function renderLatestJobs(){
 
     if(!latestJobList) return;
 
+    clearTimeout(latestTimeout);
+
     showSkeleton(latestJobList,6);
 
-    setTimeout(()=>{
+    latestTimeout = setTimeout(()=>{
 
-        latestJobList.innerHTML=
-            jobs.slice(0,6)
-            .map(createJobCard)
-            .join("");
+        latestJobList.innerHTML =
+            jobs
+                .slice(0,6)
+                .map(createJobCard)
+                .join("");
 
     },700);
 
@@ -156,25 +189,26 @@ function renderLatestJobs(){
    All Jobs
 =========================== */
 
-const pagination=document.getElementById("pagination");
-
-function renderAllJobs(jobArray=jobs){
+function renderAllJobs(jobArray = jobs){
 
     if(!allJobsContainer) return;
 
+    clearTimeout(jobsTimeout);
+
     showSkeleton(allJobsContainer,6);
 
-    setTimeout(()=>{
+    jobsTimeout = setTimeout(()=>{
 
-        const start=(currentPage-1)*jobsPerPage;
-        const end=start+jobsPerPage;
+        const start = (currentPage - 1) * jobsPerPage;
 
-        const paginatedJobs=jobArray.slice(start,end);
+        const end = start + jobsPerPage;
 
-        allJobsContainer.innerHTML=
+        const paginatedJobs = jobArray.slice(start,end);
+
+        allJobsContainer.innerHTML =
             paginatedJobs
-            .map(createJobCard)
-            .join("");
+                .map(createJobCard)
+                .join("");
 
         renderPagination(jobArray);
 
@@ -190,17 +224,17 @@ function renderPagination(jobArray){
 
     if(!pagination) return;
 
-    pagination.innerHTML="";
+    pagination.innerHTML = "";
 
-    const pages=Math.ceil(jobArray.length/jobsPerPage);
+    const pages = Math.ceil(jobArray.length / jobsPerPage);
 
-    for(let i=1;i<=pages;i++){
+    for(let i = 1; i <= pages; i++){
 
-        const button=document.createElement("button");
+        const button = document.createElement("button");
 
-        button.innerText=i;
+        button.textContent = i;
 
-        if(i===currentPage){
+        if(i === currentPage){
 
             button.classList.add("active-page");
 
@@ -208,7 +242,7 @@ function renderPagination(jobArray){
 
         button.addEventListener("click",()=>{
 
-            currentPage=i;
+            currentPage = i;
 
             renderAllJobs(jobArray);
 
@@ -219,6 +253,10 @@ function renderPagination(jobArray){
     }
 
 }
+
+/* ===========================
+   Initialize
+=========================== */
 
 renderFeaturedJobs();
 renderLatestJobs();
