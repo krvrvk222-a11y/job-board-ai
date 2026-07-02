@@ -1290,3 +1290,39 @@ body.dark-mode footer{
     }
 
 }
+
+/* ===========================
+   Search Suggestions
+=========================== */
+
+.jobs-search{
+
+    position:relative;
+
+}
+
+#search-suggestions{
+
+    position:absolute;
+    width:100%;
+    background:#ffffff;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    z-index:1000;
+    overflow:hidden;
+
+}
+
+.suggestion-item{
+
+    padding:15px;
+    cursor:pointer;
+    transition:.3s;
+
+}
+
+.suggestion-item:hover{
+
+    background:#eff6ff;
+
+}
