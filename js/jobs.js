@@ -1,5 +1,6 @@
 const featuredJobList = document.getElementById("featured-job-list");
 const latestJobList = document.getElementById("latest-job-list");
+const allJobsContainer = document.getElementById("all-jobs");
 
 function createJobCard(job){
 
@@ -17,45 +18,59 @@ function createJobCard(job){
             <p><strong>Experience:</strong> ${job.experience}</p>
 
             <p><strong>Type:</strong> ${job.type}</p>
-            <div class = "job-actions">
 
-            <button class="apply-btn">
-                Apply Now
-            </button>
+            <p>
+                ${job.skills.map(skill=>`<span class="skill-tag">${skill}</span>`).join("")}
+            </p>
 
-            <button class="bookmark-btn"
-        onclick="toggleBookmark(${job.id})">
-        ❤️
+            <div class="job-actions">
 
-            </button>
+                <button class="apply-btn">
+                    Apply Now
+                </button>
+
+                <button
+                    class="bookmark-btn"
+                    onclick="toggleBookmark(${job.id})">
+                    ❤️
+                </button>
+
             </div>
-            
+
         </div>
     `;
-
 }
 
-function loadFeaturedJobs(){
+function renderFeaturedJobs(){
 
     if(!featuredJobList) return;
 
-    const featured = jobs.filter(job => job.featured);
+    const featured = jobs.filter(job=>job.featured);
 
     featuredJobList.innerHTML = featured
         .map(createJobCard)
         .join("");
-
 }
 
-function loadLatestJobs(){
+function renderLatestJobs(){
 
     if(!latestJobList) return;
 
     latestJobList.innerHTML = jobs
+        .slice(0,6)
         .map(createJobCard)
         .join("");
-
 }
 
-loadFeaturedJobs();
-loadLatestJobs();
+function renderAllJobs(jobArray = jobs){
+
+    if(!allJobsContainer) return;
+
+    allJobsContainer.innerHTML = jobArray
+        .map(createJobCard)
+        .join("");
+}
+
+renderFeaturedJobs();
+renderLatestJobs();
+renderAllJobs();
