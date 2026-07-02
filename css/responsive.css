@@ -2,30 +2,45 @@
    Tablet
 =========================== */
 
-@media(max-width:992px){
+@media (max-width:992px){
 
     nav{
+
         flex-direction:column;
         gap:20px;
+
     }
 
-    #hero{
-        flex-direction:column;
-        text-align:center;
-    }
+    nav ul{
 
-    .hero-buttons{
+        flex-wrap:wrap;
         justify-content:center;
+
     }
 
-    .search-form{
-        flex-direction:column;
+    .hero-content{
+
+        grid-template-columns:1fr;
+        text-align:center;
+
     }
 
-    .search-form input,
-    .search-form select,
-    .search-form button{
-        width:100%;
+    .jobs-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .filter-sidebar{
+
+        order:2;
+
+    }
+
+    .jobs-content{
+
+        order:1;
+
     }
 
 }
@@ -34,30 +49,118 @@
    Mobile
 =========================== */
 
-@media(max-width:768px){
-
-    .hero-content h1{
-        font-size:38px;
-    }
+@media (max-width:768px){
 
     section{
-        padding:60px 20px;
+
+        padding:60px 0;
+
+    }
+
+    h1{
+
+        font-size:32px;
+
+    }
+
+    h2{
+
+        font-size:26px;
+
+    }
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .search-form{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .categories-grid,
+    .companies-grid,
+    .about-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    #featured-job-list,
+    #latest-job-list,
+    #bookmark-list,
+    #all-jobs,
+    #recently-viewed-list{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .job-info{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .job-footer{
+
+        flex-direction:column;
+        gap:15px;
+
+    }
+
+    .job-detail-actions{
+
+        flex-direction:column;
+
+    }
+
+    .modal-content{
+
+        width:95%;
+
+    }
+
+}
+
+/* ===========================
+   Small Mobile
+=========================== */
+
+@media (max-width:480px){
+
+    .container{
+
+        width:95%;
+
     }
 
     nav ul{
+
         flex-direction:column;
-        gap:18px;
+        gap:15px;
+
     }
 
-    .footer-links{
-        flex-direction:column;
+    .logo h1{
+
+        font-size:28px;
+
     }
 
-    .company-grid,
-    .category-grid,
-    #featured-job-list,
-    #latest-job-list{
-        grid-template-columns:1fr;
+    .hero h1{
+
+        font-size:30px;
+
+    }
+
+    .post-job-btn{
+
+        width:100%;
+
     }
 
 }
