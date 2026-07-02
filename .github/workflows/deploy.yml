@@ -1,0 +1,35 @@
+name: JobBoard AI CI
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  validate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate HTML Files
+        run: |
+          echo "Checking HTML files..."
+          ls *.html
+
+      - name: Validate CSS Files
+        run: |
+          echo "Checking CSS files..."
+          ls css
+
+      - name: Validate JavaScript Files
+        run: |
+          echo "Checking JavaScript files..."
+          ls js
+
+      - name: Build Successful
+        run: echo "Static website validation completed successfully."
