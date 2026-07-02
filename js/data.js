@@ -8,7 +8,8 @@ const jobs = [
     type:"Full Time",
     experience:"0-2 Years",
     skills:["HTML","CSS","JavaScript","React"],
-    featured:true
+    featured:true,
+    rating : 4.8
 },
 {
     id:2,
@@ -19,7 +20,8 @@ const jobs = [
     type:"Full Time",
     experience:"1-3 Years",
     skills:["Node.js","Express","MongoDB"],
-    featured:true
+    featured:true,
+    rating : 4.6
 },
 {
     id:3,
@@ -30,7 +32,8 @@ const jobs = [
     type:"Full Time",
     experience:"0-2 Years",
     skills:["Java","Spring Boot","AWS"],
-    featured:false
+    featured:false,
+    rating : 4.7
 },
 {
     id:4,
@@ -41,7 +44,8 @@ const jobs = [
     type:"Full Time",
     experience:"0-1 Year",
     skills:["Python","Django","MySQL"],
-    featured:true
+    featured:true,
+    rating : 4.5
 },
 {
     id:5,
@@ -52,7 +56,8 @@ const jobs = [
     type:"Remote",
     experience:"1-3 Years",
     skills:["Figma","Adobe XD","Photoshop"],
-    featured:false
+    featured:false,
+    rating : 4.9
 },
 {
     id:6,
@@ -63,7 +68,8 @@ const jobs = [
     type:"Hybrid",
     experience:"2-4 Years",
     skills:["Azure","Docker","Kubernetes"],
-    featured:true
+    featured:true,
+    rating : 4.4
 },
 {
     id:7,
@@ -74,7 +80,8 @@ const jobs = [
     type:"Remote",
     experience:"2-5 Years",
     skills:["Python","Machine Learning","TensorFlow"],
-    featured:true
+    featured:true,
+    rating : 4.8
 },
 {
     id:8,
@@ -85,7 +92,8 @@ const jobs = [
     type:"Full Time",
     experience:"0-2 Years",
     skills:["HTML","CSS","JavaScript","Node.js"],
-    featured:false
+    featured:false, 
+    rating : 4.3
 },
 {
     id:9,
@@ -96,7 +104,8 @@ const jobs = [
     type:"Hybrid",
     experience:"2-4 Years",
     skills:["Docker","Jenkins","AWS"],
-    featured:false
+    featured:false,
+    rating : 4.6
 },
 {
     id:10,
@@ -107,6 +116,7 @@ const jobs = [
     type:"Full Time",
     experience:"0-2 Years",
     skills:["SQL","Power BI","Excel"],
-    featured:true
+    featured:true,
+    rating : 4.7
 }
 ];

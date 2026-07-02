@@ -7,23 +7,47 @@ function createJobCard(job){
     return `
         <div class="job-card">
 
-            <h3>${job.title}</h3>
+            <div class="job-header">
 
-            <p><strong>Company:</strong> ${job.company}</p>
+                <div>
 
-            <p><strong>Location:</strong> ${job.location}</p>
+                    <h3>${job.title}</h3>
 
-            <p><strong>Salary:</strong> ${job.salary}</p>
+                    <p class="company-name">${job.company}</p>
 
-            <p><strong>Experience:</strong> ${job.experience}</p>
+                </div>
 
-            <p><strong>Type:</strong> ${job.type}</p>
+                <div class="job-badges">
 
-            <p>
-                ${job.skills.map(skill=>`<span class="skill-tag">${skill}</span>`).join("")}
-            </p>
+                    ${job.featured ? `<span class="badge featured">🔥 Featured</span>` : ""}
 
-            <div class="job-actions">
+                    <span class="badge rating">⭐ ${job.rating || "4.5"}</span>
+
+                </div>
+
+            </div>
+
+            <div class="job-info">
+
+                <p>📍 ${job.location}</p>
+
+                <p>💰 ${job.salary}</p>
+
+                <p>💼 ${job.type}</p>
+
+                <p>🎓 ${job.experience}</p>
+
+            </div>
+
+            <div class="skills">
+
+                ${job.skills.map(skill=>`
+                    <span class="skill-tag">${skill}</span>
+                `).join("")}
+
+            </div>
+
+            <div class="job-footer">
 
                 <button class="apply-btn">
                     Apply Now
@@ -39,6 +63,7 @@ function createJobCard(job){
 
         </div>
     `;
+
 }
 
 function renderFeaturedJobs(){

@@ -879,3 +879,96 @@ body.dark-mode footer{
     color:#ffffff !important;
 
 }
+
+/* ===========================
+   Modern Job Card
+=========================== */
+
+.job-card{
+
+    background:#ffffff;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+
+}
+
+.job-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 35px rgba(37,99,235,.15);
+
+}
+
+.job-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:20px;
+
+}
+
+.company-name{
+
+    color:#64748b;
+    margin-top:5px;
+
+}
+
+.job-badges{
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+
+}
+
+.badge{
+
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+
+}
+
+.featured{
+
+    background:#fef3c7;
+    color:#b45309;
+
+}
+
+.rating{
+
+    background:#dbeafe;
+    color:#2563eb;
+
+}
+
+.job-info{
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin:20px 0;
+
+}
+
+.skills{
+
+    margin:20px 0;
+
+}
+
+.job-footer{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+
+}
