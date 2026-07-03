@@ -183,7 +183,6 @@ The application flow includes:
 
 - Applicant form
 - Form submission handling
-- Application success notification
 - Duplicate application prevention
 
 Applied job IDs are stored using LocalStorage.
