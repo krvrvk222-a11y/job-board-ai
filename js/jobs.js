@@ -10,6 +10,7 @@ let featuredTimeout;
 let latestTimeout;
 let jobsTimeout;
 
+
 /* ===========================
    Skeleton Loader
 =========================== */
@@ -23,13 +24,21 @@ function showSkeleton(container, count){
     for(let i = 0; i < count; i++){
 
         skeleton += `
+
             <div class="skeleton-card">
+
                 <div class="skeleton skeleton-title"></div>
+
                 <div class="skeleton skeleton-text"></div>
+
                 <div class="skeleton skeleton-text"></div>
+
                 <div class="skeleton skeleton-text"></div>
+
                 <div class="skeleton skeleton-button"></div>
+
             </div>
+
         `;
 
     }
@@ -37,6 +46,7 @@ function showSkeleton(container, count){
     container.innerHTML = skeleton;
 
 }
+
 
 /* ===========================
    Job Card
@@ -65,7 +75,9 @@ function createJobCard(job){
                     </h3>
 
                     <p class="company-name">
+
                         ${job.company}
+
                     </p>
 
                 </div>
@@ -73,12 +85,22 @@ function createJobCard(job){
 
                 <div class="job-badges">
 
-                    ${job.featured
-                        ? `<span class="badge featured">
-                               🔥 Featured
-                           </span>`
+                    ${
+                        job.featured
+
+                        ? `
+
+                            <span class="badge featured">
+
+                                🔥 Featured
+
+                            </span>
+
+                        `
+
                         : ""
                     }
+
 
                     <span class="badge rating">
 
@@ -107,13 +129,17 @@ function createJobCard(job){
             <div class="skills">
 
                 ${(job.skills || [])
+
                     .map(skill => `
 
                         <span class="skill-tag">
+
                             ${skill}
+
                         </span>
 
                     `)
+
                     .join("")
                 }
 
@@ -124,7 +150,8 @@ function createJobCard(job){
 
                 <button
                     class="apply-btn"
-                    onclick="window.location.href='job-details.html?id=${job.id}'">
+                    onclick="window.location.href='job-details.html?id=${job.id}'"
+                >
 
                     View Details
 
@@ -134,10 +161,12 @@ function createJobCard(job){
                 <button
                     class="bookmark-btn ${isBookmarked ? "saved" : ""}"
                     onclick="toggleBookmark(${job.id}, this)"
-                    aria-label="${isBookmarked
-                        ? "Remove bookmark"
-                        : "Save job"
-                    }">
+                    aria-label="${
+                        isBookmarked
+                            ? "Remove bookmark"
+                            : "Save job"
+                    }"
+                >
 
                     ${isBookmarked ? "♥" : "♡"}
 
@@ -146,18 +175,22 @@ function createJobCard(job){
             </div>
 
 
-            ${job.userPosted
+            ${
+                job.userPosted
+
                 ? `
 
                     <button
                         class="delete-job-btn"
-                        onclick="deletePostedJob(${job.id})">
+                        onclick="deletePostedJob(${job.id})"
+                    >
 
                         Delete Job
 
                     </button>
 
                 `
+
                 : ""
             }
 
@@ -166,6 +199,7 @@ function createJobCard(job){
     `;
 
 }
+
 
 /* ===========================
    Delete Posted Job
@@ -210,9 +244,11 @@ function deletePostedJob(id){
 
     let bookmarks = getBookmarks();
 
+
     bookmarks = bookmarks.filter(
         jobId => jobId !== id
     );
+
 
     saveBookmarks(bookmarks);
 
@@ -235,8 +271,11 @@ function deletePostedJob(id){
     if(allJobsContainer){
 
         const activeJobs =
+
             typeof filteredJobs !== "undefined"
+
                 ? filteredJobs
+
                 : jobs;
 
 
@@ -247,12 +286,18 @@ function deletePostedJob(id){
 
         if(currentPage > totalPages){
 
-            currentPage = Math.max(totalPages, 1);
+            currentPage = Math.max(
+                totalPages,
+                1
+            );
 
         }
 
 
-        renderAllJobs(activeJobs, false);
+        renderAllJobs(
+            activeJobs,
+            false
+        );
 
     }
 
@@ -272,18 +317,24 @@ function renderFeaturedJobs(showLoader = true){
 
     if(!featuredJobList) return;
 
+
     clearTimeout(featuredTimeout);
 
 
     const render = ()=>{
 
+
         const featured = jobs
+
             .filter(job => job.featured)
+
             .slice(0,3);
 
 
         featuredJobList.innerHTML = featured
+
             .map(createJobCard)
+
             .join("");
 
     };
@@ -291,7 +342,11 @@ function renderFeaturedJobs(showLoader = true){
 
     if(showLoader){
 
-        showSkeleton(featuredJobList, 3);
+        showSkeleton(
+            featuredJobList,
+            3
+        );
+
 
         featuredTimeout = setTimeout(
             render,
@@ -315,14 +370,19 @@ function renderLatestJobs(showLoader = true){
 
     if(!latestJobList) return;
 
+
     clearTimeout(latestTimeout);
 
 
     const render = ()=>{
 
+
         latestJobList.innerHTML = jobs
+
             .slice(0,6)
+
             .map(createJobCard)
+
             .join("");
 
     };
@@ -330,7 +390,11 @@ function renderLatestJobs(showLoader = true){
 
     if(showLoader){
 
-        showSkeleton(latestJobList, 6);
+        showSkeleton(
+            latestJobList,
+            6
+        );
+
 
         latestTimeout = setTimeout(
             render,
@@ -347,6 +411,91 @@ function renderLatestJobs(showLoader = true){
 
 
 /* ===========================
+   Clear All Filters
+=========================== */
+
+function clearAllJobFilters(){
+
+    const jobsSearch =
+        document.getElementById("jobs-search");
+
+    const filterLocation =
+        document.getElementById("filter-location");
+
+    const filterJobType =
+        document.getElementById("filter-job-type");
+
+    const filterExperience =
+        document.getElementById("filter-experience");
+
+    const filterSalary =
+        document.getElementById("filter-salary");
+
+    const sortJobs =
+        document.getElementById("sort-jobs");
+
+
+    if(jobsSearch){
+
+        jobsSearch.value = "";
+
+    }
+
+
+    if(filterLocation){
+
+        filterLocation.value = "";
+
+    }
+
+
+    if(filterJobType){
+
+        filterJobType.value = "";
+
+    }
+
+
+    if(filterExperience){
+
+        filterExperience.value = "";
+
+    }
+
+
+    if(filterSalary){
+
+        filterSalary.value = "";
+
+    }
+
+
+    if(sortJobs){
+
+        sortJobs.value = "";
+
+    }
+
+
+    if(typeof filteredJobs !== "undefined"){
+
+        filteredJobs = [...jobs];
+
+    }
+
+
+    currentPage = 1;
+
+
+    renderAllJobs(
+        jobs,
+        false
+    );
+
+}
+
+
+/* ===========================
    All Jobs
 =========================== */
 
@@ -357,13 +506,105 @@ function renderAllJobs(
 
     if(!allJobsContainer) return;
 
+
     clearTimeout(jobsTimeout);
 
 
     const render = ()=>{
 
+
+        /* ===========================
+           No Jobs Found
+        =========================== */
+
+        if(jobArray.length === 0){
+
+            allJobsContainer.innerHTML = `
+
+                <div class="no-filter-results">
+
+                    <div class="no-filter-icon">
+
+                        🔍
+
+                    </div>
+
+
+                    <h2>
+
+                        No Jobs Found
+
+                    </h2>
+
+
+                    <p>
+
+                        We couldn't find any jobs matching
+                        your selected filters.
+
+                        Try changing the location, job type,
+                        experience, or salary range.
+
+                    </p>
+
+
+                    <button
+                        id="clear-filters-btn"
+                        class="clear-filters-btn"
+                    >
+
+                        Clear All Filters
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            if(pagination){
+
+                pagination.innerHTML = "";
+
+            }
+
+
+            const clearFiltersButton =
+                document.getElementById(
+                    "clear-filters-btn"
+                );
+
+
+            if(clearFiltersButton){
+
+                clearFiltersButton.addEventListener(
+                    "click",
+                    clearAllJobFilters
+                );
+
+            }
+
+
+            return;
+
+        }
+
+
+        const totalPages = Math.ceil(
+            jobArray.length / jobsPerPage
+        );
+
+
+        if(currentPage > totalPages){
+
+            currentPage = totalPages;
+
+        }
+
+
         const start =
             (currentPage - 1) * jobsPerPage;
+
 
         const end =
             start + jobsPerPage;
@@ -374,7 +615,9 @@ function renderAllJobs(
 
 
         allJobsContainer.innerHTML = paginatedJobs
+
             .map(createJobCard)
+
             .join("");
 
 
@@ -385,7 +628,11 @@ function renderAllJobs(
 
     if(showLoader){
 
-        showSkeleton(allJobsContainer, 6);
+        showSkeleton(
+            allJobsContainer,
+            6
+        );
+
 
         jobsTimeout = setTimeout(
             render,
@@ -409,6 +656,7 @@ function renderPagination(jobArray){
 
     if(!pagination) return;
 
+
     pagination.innerHTML = "";
 
 
@@ -418,6 +666,7 @@ function renderPagination(jobArray){
 
 
     for(let i = 1; i <= pages; i++){
+
 
         const button =
             document.createElement("button");
@@ -439,9 +688,28 @@ function renderPagination(jobArray){
             "click",
             ()=>{
 
+
                 currentPage = i;
 
+
                 renderAllJobs(jobArray);
+
+
+                const jobsPage =
+                    document.getElementById("jobs-page");
+
+
+                if(jobsPage){
+
+                    jobsPage.scrollIntoView({
+
+                        behavior: "smooth",
+
+                        block: "start"
+
+                    });
+
+                }
 
             }
         );

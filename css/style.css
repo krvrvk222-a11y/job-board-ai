@@ -1783,3 +1783,130 @@ body.dark-mode .company-card:hover h3,
 body.dark-mode .company-card:focus h3 {
     color: #60a5fa;
 }
+
+/* ===========================
+   Professional Jobs Search
+=========================== */
+
+.jobs-search {
+    position: relative;
+    width: 100%;
+    margin: 25px 0 35px;
+}
+
+.jobs-search input {
+    width: 100%;
+    height: 60px;
+    padding: 0 24px;
+    border: 1px solid #d7dfec;
+    border-radius: 14px;
+    background: white;
+    color: #172033;
+    font-size: 17px;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+    transition: border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.3s ease;
+}
+
+.jobs-search input::placeholder {
+    color: #7c8799;
+}
+
+.jobs-search input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+
+/* ===========================
+   Search Suggestions
+=========================== */
+
+#search-suggestions {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.15);
+    overflow: hidden;
+    z-index: 100;
+}
+
+.suggestion-item {
+    padding: 15px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #edf0f5;
+    transition: background 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background: #f4f7ff;
+}
+
+
+/* ===========================
+   No Filter Results
+=========================== */
+
+.no-filter-results {
+    width: 100%;
+    min-height: 420px;
+    padding: 70px 40px;
+    background: white;
+    border: 1px solid #e7ebf2;
+    border-radius: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
+}
+
+.no-filter-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 22px;
+    background: #edf4ff;
+    border-radius: 50%;
+    font-size: 32px;
+}
+
+.no-filter-results h2 {
+    margin-bottom: 12px;
+    color: #172033;
+    font-size: 28px;
+}
+
+.no-filter-results p {
+    max-width: 520px;
+    margin: 0 auto 28px;
+    color: #687386;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.clear-filters-btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.clear-filters-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
