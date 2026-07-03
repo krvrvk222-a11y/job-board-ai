@@ -109,3 +109,36 @@ if(scrollTopBtn){
     });
 
 }
+
+/* ===========================
+   Company Card Navigation
+=========================== */
+
+const companyCards = document.querySelectorAll(".company-card");
+
+companyCards.forEach(card => {
+
+    function openCompanyJobs(){
+
+        const company = card.dataset.company;
+
+        window.location.href =
+            `jobs.html?company=${encodeURIComponent(company)}`;
+
+    }
+
+    card.addEventListener("click", openCompanyJobs);
+
+    card.addEventListener("keydown", event => {
+
+        if(event.key === "Enter" || event.key === " "){
+
+            event.preventDefault();
+
+            openCompanyJobs();
+
+        }
+
+    });
+
+});

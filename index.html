@@ -1,66 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>JobBoard AI</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
+
 </head>
+
+
 <body>
 
-   <header>
+
+<header>
+
     <nav>
+
         <div class="logo">
+
             <h1>JobBoard AI</h1>
+
         </div>
+
 
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="jobs.html">Jobs</a></li>
-            <li><a href="bookmarks.html">Bookmarks</a></li>
-            <li><a href="about.html">About</a></li>
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="jobs.html">Jobs</a>
+            </li>
+
+            <li>
+                <a href="bookmarks.html">Bookmarks</a>
+            </li>
+
+            <li>
+                <a href="about.html">About</a>
+            </li>
+
         </ul>
 
+
         <div class="nav-actions">
-            <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
-            <a href="post-job.html" class="post-job-btn">Post a Job</a>
+
+            <button
+                id="theme-toggle"
+                aria-label="Toggle Dark Mode"
+            >
+                🌙
+            </button>
+
+            <a
+                href="post-job.html"
+                class="post-job-btn"
+            >
+                Post a Job
+            </a>
+
         </div>
+
     </nav>
-    </header>
 
-    <main>
+</header>
 
-    <section id="hero">
+
+
+<main>
+
+
+<section id="hero">
+
+
     <div class="hero-content">
 
-        <h1>Find Your Dream Job Today</h1>
+        <h1>
+            Find Your Dream Job Today
+        </h1>
 
         <p>
             Discover thousands of job opportunities from top companies.
             Search, bookmark, and apply for your next career move with ease.
         </p>
 
+
         <div class="hero-buttons">
-            <a href="jobs.html" class="btn-primary">Find Jobs</a>
-            <a href="#companies" class="btn-secondary">Explore Companies</a>
+
+            <a
+                href="jobs.html"
+                class="btn-primary"
+            >
+                Find Jobs
+            </a>
+
+            <a
+                href="#companies"
+                class="btn-secondary"
+            >
+                Explore Companies
+            </a>
+
         </div>
 
     </div>
 
+
     <div class="hero-image">
-        <img src="images/Hero-image.png" alt="Job Search Illustration">
+
+        <img
+            src="images/Hero-image.png"
+            alt="Job Search Illustration"
+        >
+
     </div>
+
+
 </section>
 
 
+
 <section id="search">
+
+
     <div class="search-container">
+
 
         <h2>Search Jobs</h2>
 
+
         <form class="search-form">
+
 
             <input
                 type="text"
@@ -69,159 +149,389 @@
                 autocomplete="off"
             >
 
+
             <select id="location-filter">
-                <option value="">All Locations</option>
+
+                <option value="">
+                    All Locations
+                </option>
+
                 <option>Hyderabad</option>
+
                 <option>Bengaluru</option>
+
                 <option>Chennai</option>
+
                 <option>Pune</option>
+
                 <option>Mumbai</option>
+
                 <option>Remote</option>
+
             </select>
+
 
             <select id="job-type-filter">
-                <option value="">Job Type</option>
+
+                <option value="">
+                    Job Type
+                </option>
+
                 <option>Full Time</option>
+
                 <option>Part Time</option>
+
                 <option>Internship</option>
+
                 <option>Contract</option>
+
             </select>
 
-            <button type="button" id="search-btn">Search</button>
+
+            <button
+                type="button"
+                id="search-btn"
+            >
+                Search
+            </button>
+
+
         </form>
 
+
     </div>
+
+
 </section>
 
 
-       <section id="categories">
+
+<section id="categories">
+
+
     <div class="container">
+
 
         <h2>Popular Categories</h2>
 
+
         <div class="category-grid">
 
-            <div class="category-card">
-                <h3>Frontend Development</h3>
-                <p>245 Jobs</p>
-            </div>
+    <div
+        class="category-card"
+        onclick="window.location.href='jobs.html?category=frontend'"
+        tabindex="0"
+        role="button"
+    >
+        <h3>Frontend Development</h3>
+        <p id="frontend-count">0 Jobs</p>
+    </div>
 
-            <div class="category-card">
-                <h3>Backend Development</h3>
-                <p>180 Jobs</p>
-            </div>
 
-            <div class="category-card">
-                <h3>Artificial Intelligence</h3>
-                <p>92 Jobs</p>
-            </div>
+    <div
+        class="category-card"
+        onclick="window.location.href='jobs.html?category=backend'"
+        tabindex="0"
+        role="button"
+    >
+        <h3>Backend Development</h3>
+        <p id="backend-count">0 Jobs</p>
+    </div>
 
-            <div class="category-card">
-                <h3>Data Science</h3>
-                <p>124 Jobs</p>
-            </div>
 
-            <div class="category-card">
-                <h3>UI / UX Design</h3>
-                <p>88 Jobs</p>
-            </div>
+    <div
+        class="category-card"
+        onclick="window.location.href='jobs.html?category=ai'"
+        tabindex="0"
+        role="button"
+    >
+        <h3>Artificial Intelligence</h3>
+        <p id="ai-count">0 Jobs</p>
+    </div>
 
-            <div class="category-card">
-                <h3>Cloud Computing</h3>
-                <p>74 Jobs</p>
-            </div>
 
-        </div>
+    <div
+        class="category-card"
+        onclick="window.location.href='jobs.html?category=data-science'"
+        tabindex="0"
+        role="button"
+    >
+        <h3>Data Science</h3>
+        <p id="data-science-count">0 Jobs</p>
+    </div>
+
+
+    <div
+        class="category-card"
+        onclick="window.location.href='jobs.html?category=ui-ux'"
+        tabindex="0"
+        role="button"
+    >
+        <h3>UI / UX Design</h3>
+        <p id="ui-ux-count">0 Jobs</p>
+    </div>
+
+
+    <div
+        class="category-card"
+        onclick="window.location.href='jobs.html?category=cloud'"
+        tabindex="0"
+        role="button"
+    >
+        <h3>Cloud Computing</h3>
+        <p id="cloud-count">0 Jobs</p>
+    </div>
+
+</div>
+
 
     </div>
+
+
 </section>
 
 
 
 <section id="featured-jobs">
+
+
     <div class="container">
+
 
         <h2>Featured Jobs</h2>
 
+
         <div id="featured-job-list">
 
-            <!-- Job cards will be generated by JavaScript -->
+            <!-- Job cards generated by JavaScript -->
 
         </div>
 
+
     </div>
+
+
 </section>
 
 
 
 <section id="latest-jobs">
+
+
     <div class="container">
+
 
         <h2>Latest Jobs</h2>
 
+
         <div id="latest-job-list">
 
-            <!-- Latest jobs generated using JavaScript -->
+            <!-- Latest jobs generated by JavaScript -->
 
         </div>
 
+
     </div>
+
+
 </section>
 
 
 
 <section id="companies">
+
+
     <div class="container">
+
 
         <h2>Top Companies Hiring</h2>
 
+
         <div class="company-grid">
 
-            <div class="company-card">
+
+            <div
+                class="company-card"
+                data-company="Google"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Google"
+            >
+
                 <h3>Google</h3>
-                <p>120 Open Positions</p>
+
             </div>
 
-            <div class="company-card">
+
+            <div
+                class="company-card"
+                data-company="Microsoft"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Microsoft"
+            >
+
                 <h3>Microsoft</h3>
-                <p>95 Open Positions</p>
+
             </div>
 
-            <div class="company-card">
+
+            <div
+                class="company-card"
+                data-company="Amazon"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Amazon"
+            >
+
                 <h3>Amazon</h3>
-                <p>150 Open Positions</p>
+
             </div>
 
-            <div class="company-card">
+
+            <div
+                class="company-card"
+                data-company="Infosys"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Infosys"
+            >
+
                 <h3>Infosys</h3>
-                <p>80 Open Positions</p>
+
             </div>
 
-            <div class="company-card">
+
+            <div
+                class="company-card"
+                data-company="TCS"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at TCS"
+            >
+
                 <h3>TCS</h3>
-                <p>105 Open Positions</p>
+
             </div>
 
-            <div class="company-card">
+
+            <div
+                class="company-card"
+                data-company="Accenture"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Accenture"
+            >
+
                 <h3>Accenture</h3>
-                <p>92 Open Positions</p>
+
             </div>
+
+
+            <div
+                class="company-card"
+                data-company="Wipro"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Wipro"
+            >
+
+                <h3>Wipro</h3>
+
+            </div>
+
+
+            <div
+                class="company-card"
+                data-company="Cognizant"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Cognizant"
+            >
+
+                <h3>Cognizant</h3>
+
+            </div>
+
+
+            <div
+                class="company-card"
+                data-company="Deloitte"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Deloitte"
+            >
+
+                <h3>Deloitte</h3>
+
+            </div>
+
+
+            <div
+                class="company-card"
+                data-company="Tech Mahindra"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Tech Mahindra"
+            >
+
+                <h3>Tech Mahindra</h3>
+
+            </div>
+
+
+            <div
+                class="company-card"
+                data-company="Capgemini"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Capgemini"
+            >
+
+                <h3>Capgemini</h3>
+
+            </div>
+
+
+            <div
+                class="company-card"
+                data-company="Oracle"
+                tabindex="0"
+                role="button"
+                aria-label="View jobs at Oracle"
+            >
+
+                <h3>Oracle</h3>
+
+            </div>
+
 
         </div>
 
+
     </div>
+
+
 </section>
 
-    <section id="newsletter">
+
+
+<section id="newsletter">
+
+
     <div class="container">
 
+
         <h2>Stay Updated</h2>
+
 
         <p>
             Subscribe to receive the latest job opportunities directly in your inbox.
         </p>
 
+
         <form>
+
 
             <input
                 type="email"
@@ -229,64 +539,141 @@
                 required
             >
 
+
             <button type="submit">
+
                 Subscribe
+
             </button>
+
 
         </form>
 
+
     </div>
+
+
 </section>
 
-    </main>
 
-   <footer>
+</main>
+
+
+
+<footer>
+
 
     <div class="container">
 
+
         <div class="footer-logo">
+
             <h2>JobBoard AI</h2>
-            <p>Your gateway to better career opportunities.</p>
+
+            <p>
+                Your gateway to better career opportunities.
+            </p>
+
         </div>
+
 
         <div class="footer-links">
 
+
             <div>
+
+
                 <h3>Quick Links</h3>
 
+
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="jobs.html">Jobs</a></li>
-                    <li><a href="bookmarks.html">Bookmarks</a></li>
-                    <li><a href="about.html">About</a></li>
+
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="jobs.html">Jobs</a>
+                    </li>
+
+                    <li>
+                        <a href="bookmarks.html">Bookmarks</a>
+                    </li>
+
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+
                 </ul>
+
+
             </div>
+
 
             <div>
+
+
                 <h3>Contact</h3>
 
-                <p>Email: krvrvk222@gmail.com</p>
-                <p>Phone: +91 9951350161</p>
+
+                <p>
+                    Email: krvrvk222@gmail.com
+                </p>
+
+
+                <p>
+                    Phone: +91 9951350161
+                </p>
+
+
             </div>
+
 
         </div>
 
+
         <hr>
 
-        <p>&copy; 2026 JobBoard AI. All Rights Reserved.</p>
+
+        <p>
+            &copy; 2026 JobBoard AI. All Rights Reserved.
+        </p>
+
 
     </div>
 
+
 </footer>
 
-    <script src="js/data.js"></script>
-    <script src="js/jobs.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/bookmarks.js"></script>
-    <script src="js/app.js"></script>
 
-    <button id="scroll-top-btn" title="Go to top"> ↑ </button>
-    <div id="toast" class="toast"></div>
+
+<script src="js/data.js"></script>
+
+<script src="js/jobs.js"></script>
+
+<script src="js/search.js"></script>
+
+<script src="js/bookmarks.js"></script>
+
+<script src="js/app.js"></script>
+
+
+
+<button
+    id="scroll-top-btn"
+    title="Go to top"
+    aria-label="Scroll to top"
+>
+    ↑
+</button>
+
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
 
 </body>
+
 </html>
