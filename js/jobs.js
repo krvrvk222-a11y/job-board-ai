@@ -118,13 +118,14 @@ function createJobCard(job){
 
                 </button>
 
-                <button
-                    class="bookmark-btn"
-                    onclick="toggleBookmark(${job.id})">
+           <button
+            class="bookmark-btn ${getBookmarks().includes(job.id) ? "saved" : ""}"
+            onclick="toggleBookmark(${job.id}, this)"
+            aria-label="${getBookmarks().includes(job.id) ? "Remove bookmark" : "Save job"}">
 
-                    ❤️
+            ${getBookmarks().includes(job.id) ? "♥" : "♡"}
 
-                </button>
+            </button>
 
             </div>
 

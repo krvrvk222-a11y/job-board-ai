@@ -1,8 +1,11 @@
 function getBookmarks(){
 
-    return JSON.parse(localStorage.getItem("bookmarks")) || [];
+    return JSON.parse(
+        localStorage.getItem("bookmarks")
+    ) || [];
 
 }
+
 
 function saveBookmarks(bookmarks){
 
@@ -13,49 +16,85 @@ function saveBookmarks(bookmarks){
 
 }
 
-function toggleBookmark(id){
+
+function toggleBookmark(id, button){
 
     let bookmarks = getBookmarks();
 
-    if(bookmarks.includes(id)){
+    const isSaved = bookmarks.includes(id);
 
-        bookmarks = bookmarks.filter(jobId => jobId !== id);
 
-        showToast("❤️ Bookmark Removed");
+    if(isSaved){
+
+        bookmarks = bookmarks.filter(
+            jobId => jobId !== id
+        );
+
+        showToast("Bookmark removed");
+
+        if(button){
+
+            button.textContent = "♡";
+
+            button.classList.remove("saved");
+
+            button.setAttribute(
+                "aria-label",
+                "Save job"
+            );
+
+        }
 
     }else{
 
         bookmarks.push(id);
 
-        showToast("✅ Job Saved Successfully");
+        showToast("Job added to bookmarks");
+
+        if(button){
+
+            button.textContent = "♥";
+
+            button.classList.add("saved");
+
+            button.setAttribute(
+                "aria-label",
+                "Remove bookmark"
+            );
+
+        }
 
     }
+
 
     saveBookmarks(bookmarks);
 
-    if(typeof loadBookmarks === "function"){
-        loadBookmarks();
-    }
 
-    if(typeof renderAllJobs === "function"){
-        renderAllJobs(filteredJobs || jobs);
+    if(bookmarkList){
+
+        loadBookmarks();
+
     }
 
 }
 
-const bookmarkList = document.getElementById("bookmark-list");
+
+const bookmarkList =
+    document.getElementById("bookmark-list");
+
 
 function loadBookmarks(){
 
     if(!bookmarkList) return;
 
+
     const saved = getBookmarks();
 
+
     const savedJobs = jobs.filter(job =>
-
         saved.includes(job.id)
-
     );
+
 
     if(savedJobs.length === 0){
 
@@ -65,7 +104,10 @@ function loadBookmarks(){
 
                 <h2>No Bookmarked Jobs</h2>
 
-                <p>Save jobs by clicking ❤️ on any job card.</p>
+                <p>
+                    Save jobs by clicking the bookmark icon
+                    on any job card.
+                </p>
 
             </div>
 
@@ -75,17 +117,21 @@ function loadBookmarks(){
 
     }
 
+
     if(typeof createJobCard !== "function"){
 
         bookmarkList.innerHTML = `
 
-            <p>Unable to load bookmarked jobs.</p>
+            <p>
+                Unable to load bookmarked jobs.
+            </p>
 
         `;
 
         return;
 
     }
+
 
     bookmarkList.innerHTML = savedJobs
 
@@ -94,5 +140,6 @@ function loadBookmarks(){
         .join("");
 
 }
+
 
 loadBookmarks();
