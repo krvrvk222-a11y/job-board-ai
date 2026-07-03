@@ -961,3 +961,19 @@ const jobs = [
 }
 
 ];
+
+/* ===========================
+   Load User Posted Jobs
+=========================== */
+
+const postedJobs =
+    JSON.parse(
+        localStorage.getItem("postedJobs")
+    ) || [];
+
+
+if(postedJobs.length > 0){
+
+    jobs.unshift(...postedJobs);
+
+}

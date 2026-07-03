@@ -44,7 +44,7 @@ if(jobDetailCard){
 
                 <h3>${job.company}</h3>
 
-                <p>⭐ ${job.rating}</p>
+                <p>⭐ ${job.rating || "New"}</p>
 
                 <hr>
 
@@ -55,7 +55,7 @@ if(jobDetailCard){
 
                 <p>
                     <strong>💰 Salary:</strong>
-                    ₹${job.salary} LPA
+                    ${job.salary}
                 </p>
 
                 <p>
@@ -72,8 +72,8 @@ if(jobDetailCard){
 
                 <div class="skills">
 
-                    ${job.skills
-                        .map(skill=>`
+                    ${(job.skills || [])
+                        .map(skill => `
 
                             <span class="skill-tag">
 
@@ -89,86 +89,107 @@ if(jobDetailCard){
                 <h2>Job Description</h2>
 
                 <p>
-
-                    ${job.description}
-
+                    ${
+                        job.description ||
+                        `We are looking for a passionate ${job.title}
+                        to join the ${job.company} team. You will
+                        collaborate with talented professionals and
+                        contribute to exciting real-world projects.`
+                    }
                 </p>
 
-                <h2>Responsibilities</h2>
+                ${
+                    job.responsibilities &&
+                    job.responsibilities.length > 0
 
-                <ul>
+                    ? `
 
-                    ${job.responsibilities
-                        .map(item=>`
+                        <h2>Responsibilities</h2>
 
-                            <li>${item}</li>
+                        <ul>
 
-                        `)
-                        .join("")}
+                            ${job.responsibilities
+                                .map(item => `
+                                    <li>${item}</li>
+                                `)
+                                .join("")}
 
-                </ul>
+                        </ul>
 
-                <h2>Requirements</h2>
+                    `
 
-                <ul>
+                    : ""
+                }
 
-                    ${job.requirements
-                        .map(item=>`
+                ${
+                    job.requirements &&
+                    job.requirements.length > 0
 
-                            <li>${item}</li>
+                    ? `
 
-                        `)
-                        .join("")}
+                        <h2>Requirements</h2>
 
-                </ul>
+                        <ul>
+
+                            ${job.requirements
+                                .map(item => `
+                                    <li>${item}</li>
+                                `)
+                                .join("")}
+
+                        </ul>
+
+                    `
+
+                    : ""
+                }
 
                 <h2>Company Details</h2>
 
                 <p>
-
                     <strong>Industry:</strong>
-
-                    ${job.industry}
-
+                    ${job.industry || "Technology"}
                 </p>
 
                 <p>
-
                     <strong>Employees:</strong>
-
-                    ${job.employees}
-
+                    ${job.employees || "Not specified"}
                 </p>
 
                 <p>
-
                     <strong>Applicants:</strong>
-
-                    ${job.applicants}
-
+                    ${job.applicants ?? 0}
                 </p>
 
                 <p>
-
                     <strong>Status:</strong>
-
-                    ${job.status}
-
+                    ${job.status || "Actively Hiring"}
                 </p>
 
-                <p>
+                ${
+                    job.website
 
-                    <strong>Website:</strong>
+                    ? `
 
-                    <a
-                        href="${job.website}"
-                        target="_blank">
+                        <p>
 
-                        Visit Company
+                            <strong>Website:</strong>
 
-                    </a>
+                            <a
+                                href="${job.website}"
+                                target="_blank"
+                                rel="noopener noreferrer">
 
-                </p>
+                                Visit Company
+
+                            </a>
+
+                        </p>
+
+                    `
+
+                    : ""
+                }
 
                 <div class="job-detail-actions">
 
@@ -193,7 +214,8 @@ if(jobDetailCard){
             </div>
 
         `;
-                /* ===========================
+
+        /* ===========================
            Apply Modal
         =========================== */
 
@@ -232,7 +254,6 @@ if(jobDetailCard){
                 event.preventDefault();
 
                 let appliedJobs =
-
                     JSON.parse(
                         localStorage.getItem("appliedJobs")
                     ) || [];
@@ -242,11 +263,8 @@ if(jobDetailCard){
                     appliedJobs.push(job.id);
 
                     localStorage.setItem(
-
                         "appliedJobs",
-
                         JSON.stringify(appliedJobs)
-
                     );
 
                     showToast(
@@ -282,11 +300,8 @@ if(jobDetailCard){
                 const url = window.location.href;
 
                 if(
-
                     navigator.clipboard &&
-
                     window.isSecureContext
-
                 ){
 
                     navigator.clipboard
@@ -346,6 +361,7 @@ if(jobDetailCard){
     }
 
 }
+
 /* ===========================
    Recently Viewed Jobs
 =========================== */
@@ -396,9 +412,7 @@ function loadRecentlyViewed(){
     recentlyViewedList.innerHTML =
 
         viewedJobs
-
             .map(createJobCard)
-
             .join("");
 
 }

@@ -214,3 +214,28 @@
     }
 
 }
+
+@media(max-width:768px){
+
+    #post-job-page{
+        padding:50px 0;
+    }
+
+    .post-job-header h1{
+        font-size:32px;
+    }
+
+    .post-job-form-container{
+        padding:25px 20px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .post-submit-btn{
+        width:100%;
+        text-align:center;
+    }
+
+}

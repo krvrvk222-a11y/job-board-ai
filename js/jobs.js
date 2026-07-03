@@ -44,9 +44,11 @@ function showSkeleton(container, count){
 
 function createJobCard(job){
 
+    const isBookmarked = getBookmarks().includes(job.id);
+
     return `
 
-        <div class="job-card">
+        <div class="job-card" data-job-id="${job.id}">
 
             <div class="job-header">
 
@@ -63,18 +65,20 @@ function createJobCard(job){
                     </h3>
 
                     <p class="company-name">
-
                         ${job.company}
-
                     </p>
 
                 </div>
 
+
                 <div class="job-badges">
 
                     ${job.featured
-                        ? `<span class="badge featured">🔥 Featured</span>`
-                        : ""}
+                        ? `<span class="badge featured">
+                               🔥 Featured
+                           </span>`
+                        : ""
+                    }
 
                     <span class="badge rating">
 
@@ -86,11 +90,12 @@ function createJobCard(job){
 
             </div>
 
+
             <div class="job-info">
 
                 <p>📍 ${job.location}</p>
 
-                <p>💰 ₹${job.salary} LPA</p>
+                <p>💰 ${job.salary}</p>
 
                 <p>💼 ${job.type}</p>
 
@@ -98,15 +103,22 @@ function createJobCard(job){
 
             </div>
 
+
             <div class="skills">
 
-                ${job.skills
+                ${(job.skills || [])
                     .map(skill => `
-                        <span class="skill-tag">${skill}</span>
+
+                        <span class="skill-tag">
+                            ${skill}
+                        </span>
+
                     `)
-                    .join("")}
+                    .join("")
+                }
 
             </div>
+
 
             <div class="job-footer">
 
@@ -118,16 +130,36 @@ function createJobCard(job){
 
                 </button>
 
-           <button
-            class="bookmark-btn ${getBookmarks().includes(job.id) ? "saved" : ""}"
-            onclick="toggleBookmark(${job.id}, this)"
-            aria-label="${getBookmarks().includes(job.id) ? "Remove bookmark" : "Save job"}">
 
-            ${getBookmarks().includes(job.id) ? "♥" : "♡"}
+                <button
+                    class="bookmark-btn ${isBookmarked ? "saved" : ""}"
+                    onclick="toggleBookmark(${job.id}, this)"
+                    aria-label="${isBookmarked
+                        ? "Remove bookmark"
+                        : "Save job"
+                    }">
 
-            </button>
+                    ${isBookmarked ? "♥" : "♡"}
+
+                </button>
 
             </div>
+
+
+            ${job.userPosted
+                ? `
+
+                    <button
+                        class="delete-job-btn"
+                        onclick="deletePostedJob(${job.id})">
+
+                        Delete Job
+
+                    </button>
+
+                `
+                : ""
+            }
 
         </div>
 
@@ -136,86 +168,238 @@ function createJobCard(job){
 }
 
 /* ===========================
+   Delete Posted Job
+=========================== */
+
+function deletePostedJob(id){
+
+    const shouldDelete = confirm(
+        "Are you sure you want to delete this job?"
+    );
+
+    if(!shouldDelete) return;
+
+
+    let postedJobs = JSON.parse(
+        localStorage.getItem("postedJobs")
+    ) || [];
+
+
+    postedJobs = postedJobs.filter(
+        job => job.id !== id
+    );
+
+
+    localStorage.setItem(
+        "postedJobs",
+        JSON.stringify(postedJobs)
+    );
+
+
+    const jobIndex = jobs.findIndex(
+        job => job.id === id
+    );
+
+
+    if(jobIndex !== -1){
+
+        jobs.splice(jobIndex, 1);
+
+    }
+
+
+    let bookmarks = getBookmarks();
+
+    bookmarks = bookmarks.filter(
+        jobId => jobId !== id
+    );
+
+    saveBookmarks(bookmarks);
+
+
+    if(
+        typeof filteredJobs !== "undefined" &&
+        Array.isArray(filteredJobs)
+    ){
+
+        filteredJobs = filteredJobs.filter(
+            job => job.id !== id
+        );
+
+    }
+
+
+    showToast("Job deleted successfully");
+
+
+    if(allJobsContainer){
+
+        const activeJobs =
+            typeof filteredJobs !== "undefined"
+                ? filteredJobs
+                : jobs;
+
+
+        const totalPages = Math.ceil(
+            activeJobs.length / jobsPerPage
+        );
+
+
+        if(currentPage > totalPages){
+
+            currentPage = Math.max(totalPages, 1);
+
+        }
+
+
+        renderAllJobs(activeJobs, false);
+
+    }
+
+
+    renderLatestJobs(false);
+
+    renderFeaturedJobs(false);
+
+}
+
+
+/* ===========================
    Featured Jobs
 =========================== */
 
-function renderFeaturedJobs(){
+function renderFeaturedJobs(showLoader = true){
 
     if(!featuredJobList) return;
 
     clearTimeout(featuredTimeout);
 
-    showSkeleton(featuredJobList,3);
 
-    featuredTimeout = setTimeout(()=>{
+    const render = ()=>{
 
         const featured = jobs
             .filter(job => job.featured)
             .slice(0,3);
 
-        featuredJobList.innerHTML =
-            featured
-                .map(createJobCard)
-                .join("");
 
-    },700);
+        featuredJobList.innerHTML = featured
+            .map(createJobCard)
+            .join("");
+
+    };
+
+
+    if(showLoader){
+
+        showSkeleton(featuredJobList, 3);
+
+        featuredTimeout = setTimeout(
+            render,
+            700
+        );
+
+    }else{
+
+        render();
+
+    }
 
 }
+
 
 /* ===========================
    Latest Jobs
 =========================== */
 
-function renderLatestJobs(){
+function renderLatestJobs(showLoader = true){
 
     if(!latestJobList) return;
 
     clearTimeout(latestTimeout);
 
-    showSkeleton(latestJobList,6);
 
-    latestTimeout = setTimeout(()=>{
+    const render = ()=>{
 
-        latestJobList.innerHTML =
-            jobs
-                .slice(0,6)
-                .map(createJobCard)
-                .join("");
+        latestJobList.innerHTML = jobs
+            .slice(0,6)
+            .map(createJobCard)
+            .join("");
 
-    },700);
+    };
+
+
+    if(showLoader){
+
+        showSkeleton(latestJobList, 6);
+
+        latestTimeout = setTimeout(
+            render,
+            700
+        );
+
+    }else{
+
+        render();
+
+    }
 
 }
+
 
 /* ===========================
    All Jobs
 =========================== */
 
-function renderAllJobs(jobArray = jobs){
+function renderAllJobs(
+    jobArray = jobs,
+    showLoader = true
+){
 
     if(!allJobsContainer) return;
 
     clearTimeout(jobsTimeout);
 
-    showSkeleton(allJobsContainer,6);
 
-    jobsTimeout = setTimeout(()=>{
+    const render = ()=>{
 
-        const start = (currentPage - 1) * jobsPerPage;
+        const start =
+            (currentPage - 1) * jobsPerPage;
 
-        const end = start + jobsPerPage;
+        const end =
+            start + jobsPerPage;
 
-        const paginatedJobs = jobArray.slice(start,end);
 
-        allJobsContainer.innerHTML =
-            paginatedJobs
-                .map(createJobCard)
-                .join("");
+        const paginatedJobs =
+            jobArray.slice(start, end);
+
+
+        allJobsContainer.innerHTML = paginatedJobs
+            .map(createJobCard)
+            .join("");
+
 
         renderPagination(jobArray);
 
-    },700);
+    };
+
+
+    if(showLoader){
+
+        showSkeleton(allJobsContainer, 6);
+
+        jobsTimeout = setTimeout(
+            render,
+            700
+        );
+
+    }else{
+
+        render();
+
+    }
 
 }
+
 
 /* ===========================
    Pagination
@@ -227,27 +411,41 @@ function renderPagination(jobArray){
 
     pagination.innerHTML = "";
 
-    const pages = Math.ceil(jobArray.length / jobsPerPage);
+
+    const pages = Math.ceil(
+        jobArray.length / jobsPerPage
+    );
+
 
     for(let i = 1; i <= pages; i++){
 
-        const button = document.createElement("button");
+        const button =
+            document.createElement("button");
+
 
         button.textContent = i;
 
+
         if(i === currentPage){
 
-            button.classList.add("active-page");
+            button.classList.add(
+                "active-page"
+            );
 
         }
 
-        button.addEventListener("click",()=>{
 
-            currentPage = i;
+        button.addEventListener(
+            "click",
+            ()=>{
 
-            renderAllJobs(jobArray);
+                currentPage = i;
 
-        });
+                renderAllJobs(jobArray);
+
+            }
+        );
+
 
         pagination.appendChild(button);
 
@@ -255,10 +453,13 @@ function renderPagination(jobArray){
 
 }
 
+
 /* ===========================
    Initialize
 =========================== */
 
 renderFeaturedJobs();
+
 renderLatestJobs();
+
 renderAllJobs();
