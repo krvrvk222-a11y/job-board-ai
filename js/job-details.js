@@ -14,20 +14,28 @@ const job = jobs.find(item => item.id === jobId);
 let recentlyViewed =
     JSON.parse(localStorage.getItem("recentlyViewed")) || [];
 
-recentlyViewed = recentlyViewed.filter(id => id !== jobId);
 
-recentlyViewed.unshift(jobId);
+if(job){
 
-if(recentlyViewed.length > 5){
+    recentlyViewed =
+        recentlyViewed.filter(id => id !== jobId);
 
-    recentlyViewed.pop();
+    recentlyViewed.unshift(jobId);
+
+
+    if(recentlyViewed.length > 5){
+
+        recentlyViewed.pop();
+
+    }
+
+
+    localStorage.setItem(
+        "recentlyViewed",
+        JSON.stringify(recentlyViewed)
+    );
 
 }
-
-localStorage.setItem(
-    "recentlyViewed",
-    JSON.stringify(recentlyViewed)
-);
 
 
 /* ===========================
@@ -50,20 +58,24 @@ if(jobDetailCard){
 
                 <hr>
 
+
                 <p>
                     <strong>📍 Location:</strong>
                     ${job.location}
                 </p>
 
+
                 <p>
                     <strong>💰 Salary:</strong>
-                    ${job.salary}
+                    ₹${job.salary} LPA
                 </p>
+
 
                 <p>
                     <strong>💼 Job Type:</strong>
                     ${job.type}
                 </p>
+
 
                 <p>
                     <strong>🎓 Experience:</strong>
@@ -72,6 +84,7 @@ if(jobDetailCard){
 
 
                 <h2>Skills</h2>
+
 
                 <div class="skills">
 
@@ -89,6 +102,7 @@ if(jobDetailCard){
 
 
                 <h2>Job Description</h2>
+
 
                 <p>
 
@@ -209,9 +223,7 @@ if(jobDetailCard){
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 Visit Company
-
                             </a>
 
                         </p>
@@ -229,9 +241,7 @@ if(jobDetailCard){
                         class="btn-primary"
                         type="button"
                     >
-
                         Apply Now
-
                     </button>
 
 
@@ -240,9 +250,7 @@ if(jobDetailCard){
                         class="btn-secondary"
                         type="button"
                     >
-
                         Share Job
-
                     </button>
 
                 </div>
@@ -310,6 +318,23 @@ if(jobDetailCard){
             );
 
 
+            document.addEventListener(
+                "keydown",
+                event => {
+
+                    if(
+                        event.key === "Escape" &&
+                        modal.style.display === "flex"
+                    ){
+
+                        modal.style.display = "none";
+
+                    }
+
+                }
+            );
+
+
             applyForm.addEventListener(
                 "submit",
                 event => {
@@ -339,27 +364,56 @@ if(jobDetailCard){
                         );
 
 
+                        modal.style.display = "none";
+
+                        applyForm.reset();
+
+
                         showToast(
-                            "✅ Application Submitted Successfully"
+                            "🎉 Application submitted successfully! Your application has been received."
                         );
+
+
+                        applyButton.textContent = "Applied";
+
+                        applyButton.disabled = true;
+
+                        applyButton.classList.add("applied");
 
 
                     }else{
 
 
+                        modal.style.display = "none";
+
+                        applyForm.reset();
+
+
                         showToast(
-                            "⚠️ You already applied for this job"
+                            "⚠️ You have already applied for this position."
                         );
 
                     }
 
-
-                    applyForm.reset();
-
-                    modal.style.display = "none";
-
                 }
             );
+
+
+            const appliedJobs =
+                JSON.parse(
+                    localStorage.getItem("appliedJobs")
+                ) || [];
+
+
+            if(appliedJobs.includes(job.id)){
+
+                applyButton.textContent = "Applied";
+
+                applyButton.disabled = true;
+
+                applyButton.classList.add("applied");
+
+            }
 
         }
 
@@ -420,7 +474,7 @@ if(jobDetailCard){
 
 
                             showToast(
-                                "🔗 Job link copied to clipboard"
+                                "🔗 Job link copied to clipboard."
                             );
 
 
@@ -462,7 +516,6 @@ if(jobDetailCard){
 
             textArea.value = text;
 
-
             textArea.style.position = "fixed";
 
             textArea.style.left = "-9999px";
@@ -488,13 +541,13 @@ if(jobDetailCard){
             if(copied){
 
                 showToast(
-                    "🔗 Job link copied to clipboard"
+                    "🔗 Job link copied to clipboard."
                 );
 
             }else{
 
                 showToast(
-                    "⚠️ Unable to copy job link"
+                    "⚠️ Unable to copy job link."
                 );
 
             }
